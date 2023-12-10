@@ -38,7 +38,6 @@ public class LoginServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 		else {
-			
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/job_portal?useSSL=false", "root", "Emebet@1994");

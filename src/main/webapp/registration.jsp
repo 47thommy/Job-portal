@@ -98,6 +98,9 @@ if(status=="invalid"){
 if(status=="confirm_password_invalid"){
 	swal("Sorry"," Password and Confirm Password do not match","error");
 }
+if(status=="duplicate_email"){
+	swal("Sorry","User with the specified email already exists","error");
+}
 
 </script>
 </body>

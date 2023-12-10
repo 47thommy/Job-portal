@@ -52,35 +52,54 @@ public class RegistrationServlet extends HttpServlet {
 			
 		}
 		else {
-			
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/job_portal?useSSL=false", "root", "Emebet@1994");
-				PreparedStatement pst = con.prepareStatement("insert into users(username, password, email) values(?,?,?)");
-				pst.setString(1, username);
-				pst.setString(2,password);
-				pst.setString(3,email);
-				
-				int rowCount = pst.executeUpdate();
-				
-				dispatcher = request.getRequestDispatcher("registration.jsp");
-				
-				if (rowCount>0) {
-					request.setAttribute("status", "success");
-				} else {
-					request.setAttribute("status", "failed");
-				}
-				dispatcher.forward(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					con.close();
-				} catch (SQLException e) {
-				
-					e.printStackTrace();
-				}
-			}
+		    try {
+		        Class.forName("com.mysql.cj.jdbc.Driver");
+		        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/job_portal?useSSL=false", "root", "Emebet@1994");
+
+		        
+		        PreparedStatement checkEmailStmt = con.prepareStatement("SELECT COUNT(*) FROM users WHERE email = ?");
+		        checkEmailStmt.setString(1, email);
+		        var resultSet = checkEmailStmt.executeQuery();
+		        resultSet.next();
+		        int emailCount = resultSet.getInt(1);
+
+		        if (emailCount > 0) {
+		            
+		            request.setAttribute("status", "duplicate_email");
+		            dispatcher = request.getRequestDispatcher("registration.jsp");
+		            dispatcher.forward(request, response);
+		        } else {
+		          
+		            PreparedStatement pst = con.prepareStatement("INSERT INTO users(username, password, email) VALUES (?, ?, ?)");
+		            pst.setString(1, username);
+		            pst.setString(2, password);
+		            pst.setString(3, email);
+
+		            int rowCount = pst.executeUpdate();
+
+		            
+
+		            if (rowCount > 0) {
+		                request.setAttribute("status", "success");
+		                dispatcher = request.getRequestDispatcher("login.jsp");
+		                
+		            } else {
+		                request.setAttribute("status", "failed");
+		                dispatcher = request.getRequestDispatcher("registration.jsp");
+		            }
+		            dispatcher.forward(request, response);
+		        }
+		    } catch (SQLException | ClassNotFoundException e) {
+		        e.printStackTrace();
+		    } finally {
+		        try {
+		            if (con != null) {
+		                con.close();
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
 		}
 
 		
