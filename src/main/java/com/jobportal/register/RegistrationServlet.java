@@ -29,7 +29,21 @@ public class RegistrationServlet extends HttpServlet {
 		String password = request.getParameter("pass");
 		RequestDispatcher dispatcher = null;
 		Connection con = null;
-		
+		if (password == null || password.equals("")) {
+			request.setAttribute("status", "invalid");
+			dispatcher=request.getRequestDispatcher("registration.jsp");
+			dispatcher.forward(request, response);
+		}
+		if (email == null || email.equals("")) {
+			request.setAttribute("status", "invalid");
+			dispatcher=request.getRequestDispatcher("registration.jsp");
+			dispatcher.forward(request, response);
+		}
+		if (username == null || username.equals("")) {
+			request.setAttribute("status", "invalid");
+			dispatcher=request.getRequestDispatcher("registration.jsp");
+			dispatcher.forward(request, response);
+		}
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/job_portal?useSSL=false", "root", "Emebet@1994");

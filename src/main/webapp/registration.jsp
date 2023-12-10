@@ -92,6 +92,9 @@ var status = document.getElementById("status").value;
 if(status=="success"){
 	swal("Congrats","Account Created Successfully","success");
 }
+if(status=="invalid"){
+	swal("Sorry","Provide all the fields","error");
+}
 </script>
 </body>
 <!-- This templates was made by Colorlib (https://colorlib.com) -->
