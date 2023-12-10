@@ -32,30 +32,34 @@ public class LoginServlet extends HttpServlet {
 			dispatcher=request.getRequestDispatcher("login.jsp");
 			dispatcher.forward(request, response);
 		}
-		if (password == null || password.equals("")) {
+		else if (password == null || password.equals("")) {
 			request.setAttribute("status", "invalid");
 			dispatcher=request.getRequestDispatcher("login.jsp");
 			dispatcher.forward(request, response);
 		}
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/job_portal?useSSL=false", "root", "Emebet@1994");
-			PreparedStatement pst = con.prepareStatement("select * from users where email=? and password=?");
-			pst.setString(1, email);
-			pst.setString(2, password);
+		else {
 			
-			ResultSet rs = pst.executeQuery();
-			
-			if (rs.next()) {
-				session.setAttribute("email", rs.getString("email"));
-				dispatcher=request.getRequestDispatcher("index.jsp");
-			} else {
-				request.setAttribute("status", "failed");
-				dispatcher = request.getRequestDispatcher("login.jsp");
-			}
-			dispatcher.forward(request, response);
-		} catch (Exception e) {
-			e.printStackTrace();		}
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/job_portal?useSSL=false", "root", "Emebet@1994");
+				PreparedStatement pst = con.prepareStatement("select * from users where email=? and password=?");
+				pst.setString(1, email);
+				pst.setString(2, password);
+				
+				ResultSet rs = pst.executeQuery();
+				
+				if (rs.next()) {
+					session.setAttribute("email", rs.getString("email"));
+					dispatcher=request.getRequestDispatcher("index.jsp");
+				} else {
+					request.setAttribute("status", "failed");
+					dispatcher = request.getRequestDispatcher("login.jsp");
+				}
+				dispatcher.forward(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();		}
+		}
+
 	
 	}
 

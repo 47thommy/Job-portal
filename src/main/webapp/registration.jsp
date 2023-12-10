@@ -45,7 +45,7 @@
 							<div class="form-group">
 								<label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
 								<input type="password" name="re_pass" id="re_pass"
-									placeholder="Repeat your password" required="required" />
+									placeholder="Confirm password" required="required" />
 							</div>
 							<div class="form-group">
 								<input type="checkbox" name="agree-term" id="agree-term"
@@ -95,6 +95,10 @@ if(status=="success"){
 if(status=="invalid"){
 	swal("Sorry","Provide all the fields","error");
 }
+if(status=="confirm_password_invalid"){
+	swal("Sorry"," Password and Confirm Password do not match","error");
+}
+
 </script>
 </body>
 <!-- This templates was made by Colorlib (https://colorlib.com) -->

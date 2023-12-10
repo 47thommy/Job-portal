@@ -4,4 +4,14 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>NewPasswordServlet</display-name>
+    <servlet-name>NewPasswordServlet</servlet-name>
+    <servlet-class>com.jobportal.newpassword.NewPasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewPasswordServlet</servlet-name>
+    <url-pattern>/NewPasswordServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
