@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Sign Up Form by Colorlib</title>
+<title>Login</title>
 
 <!-- Font Icon -->
 <link rel="stylesheet"
@@ -81,6 +81,9 @@
 var status = document.getElementById("status").value;
 if(status=="failed"){
 	swal("Sorry","Email or password incorrecy","error");
+}
+if(status == "invalid"){
+	swal("Sorry","please provide all the fields","error");
 }
 </script>
 </body>
